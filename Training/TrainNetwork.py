@@ -63,14 +63,15 @@ if args.gpu:
             callbacks=[]
         )
 else:
-    model = BeeModel.get_bee_model(150, 75)
-    model.fit(
-        train,
-        validation_data=val,
-        epochs=20,
-        verbose=1,
-        callbacks=[]
-    )
+    with tf.device('/CPU:0'):
+        model = BeeModel.get_bee_model(150, 75)
+        model.fit(
+            train,
+            validation_data=val,
+            epochs=20,
+            verbose=1,
+            callbacks=[]
+        )
 
 # Save the model and show the summary
 model.save(MODEL_SAVE_PATH)
